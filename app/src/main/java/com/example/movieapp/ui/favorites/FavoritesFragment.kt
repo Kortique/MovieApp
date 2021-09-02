@@ -1,4 +1,4 @@
-package com.example.movieapp.ui.home
+package com.example.movieapp.ui.favorites
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.movieapp.databinding.FragmentHomeBinding
+import com.example.movieapp.databinding.FragmentFavoritesBinding
 
-class HomeFragment : Fragment() {
-    private lateinit var homeViewModel: HomeViewModel
-    private var _binding: FragmentHomeBinding? = null
+class FavoritesFragment : Fragment() {
+
+    private lateinit var favoritesViewModel: FavoritesViewModel
+    private var _binding: FragmentFavoritesBinding? = null
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -20,14 +22,14 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        favoritesViewModel =
+            ViewModelProvider(this).get(FavoritesViewModel::class.java)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentFavoritesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner, {
+        val textView: TextView = binding.textDashboard
+        favoritesViewModel.text.observe(viewLifecycleOwner, {
             textView.text = it
         })
         return root
