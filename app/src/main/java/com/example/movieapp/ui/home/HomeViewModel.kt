@@ -10,17 +10,12 @@ import java.lang.Thread.sleep
 class HomeViewModel(
     private val moviesRepository: MoviesRepository
 ) : ViewModel() {
-
     private val _appState: MutableLiveData<AppState> = MutableLiveData(AppState.Loading)
     val appState: LiveData<AppState> = _appState
 
-    init {
-        getData()
-    }
-
-    private fun getData() {
+    fun fetchData() {
         Thread {
-            sleep(1000)
+            sleep(1500)
 
             val rand = (0..100).random()
 
@@ -34,6 +29,6 @@ class HomeViewModel(
             } else {
                 _appState.postValue(AppState.Error(Exception("Error")))
             }
-        }
+        }.start()
     }
 }
