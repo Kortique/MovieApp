@@ -3,11 +3,32 @@ package com.example.movieapp.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.movieapp.entities.AppState
+import com.example.movieapp.repositories.MoviesRepository
+import java.lang.Thread.sleep
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    private val moviesRepository: MoviesRepository
+) : ViewModel() {
+    private val _appState: MutableLiveData<AppState> = MutableLiveData(AppState.Loading)
+    val appState: LiveData<AppState> = _appState
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+    fun fetchData() {
+        Thread {
+            sleep(1500)
+
+            val rand = (0..100).random()
+
+            if (rand % 2 == 0) {
+                _appState.postValue(
+                    AppState.Success(
+                        moviesRepository.getNowPlayingMovies(),
+                        moviesRepository.getUpcomingMovies()
+                    )
+                )
+            } else {
+                _appState.postValue(AppState.Error(Exception("Error")))
+            }
+        }.start()
     }
-    val text: LiveData<String> = _text
 }
