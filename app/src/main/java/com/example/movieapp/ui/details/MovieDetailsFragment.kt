@@ -21,6 +21,7 @@ class MovieDetailsFragment : Fragment() {
             }
     }
 
+
     private var _binding: FragmentMovieDetailsBinding? = null
     private val binding get() = _binding!!
 
