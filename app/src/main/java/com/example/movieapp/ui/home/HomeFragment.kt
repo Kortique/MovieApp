@@ -5,23 +5,35 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.google.android.material.snackbar.Snackbar
+import androidx.navigation.fragment.findNavController
+import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentHomeBinding
 import com.example.movieapp.entities.AppState
-import com.example.movieapp.ui.home.adapters.NowPlayingMoviesAdapter
-import com.example.movieapp.ui.home.adapters.UpcomingMoviesAdapter
+import com.example.movieapp.entities.CategoryWithMovies
+import com.example.movieapp.entities.Movie
+import com.example.movieapp.entities.MoviesCategory
+import com.example.movieapp.ui.details.MovieDetailsFragment
+import com.example.movieapp.ui.home.adapters.CategoryWithMoviesAdapter
+import com.example.movieapp.ui.home.adapters.MoviesAdapter
+import com.example.movieapp.utils.showSnackBar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
+
     private val homeViewModel: HomeViewModel by viewModel()
     private var _binding: FragmentHomeBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
     private val binding get() = _binding!!
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
@@ -39,25 +51,54 @@ class HomeFragment : Fragment() {
         when (appState) {
             is AppState.Loading -> {
                 progressBar.visibility = View.VISIBLE
-                mainGroup.visibility = View.GONE
-                Snackbar.make(mainConstraint, "Loading", Snackbar.LENGTH_SHORT).show()
+                categoriesRecyclerview.visibility = View.GONE
+
+                mainConstraint.showSnackBar(R.string.loading)
             }
+
             is AppState.Success -> {
                 progressBar.visibility = View.GONE
-                mainGroup.visibility = View.VISIBLE
+                categoriesRecyclerview.visibility = View.VISIBLE
 
-                nowPlayingRecyclerview.adapter = NowPlayingMoviesAdapter(appState.nowPlaying)
-                upcomingRecyclerview.adapter = UpcomingMoviesAdapter(appState.upcomingMovies)
+                val onItemClickListener = object : MoviesAdapter.OnItemClickListener {
+                    override fun onItemClick(movie: Movie) {
+                        val navController = findNavController()
 
-                Snackbar.make(mainConstraint, "Success", Snackbar.LENGTH_SHORT).show()
+                        val bundle = Bundle().apply {
+                            putParcelable(MovieDetailsFragment.MOVIE_ARG, movie)
+                        }
+
+                        navController.navigate(R.id.action_navigation_home_to_movie_details, bundle)
+                    }
+                }
+
+                val categoriesWithMovies = listOf(
+                    CategoryWithMovies(
+                        MoviesCategory.NOW_PLAYING,
+                        getString(R.string.now_playing),
+                        appState.nowPlaying
+                    ),
+                    CategoryWithMovies(
+                        MoviesCategory.UPCOMING,
+                        getString(R.string.upcoming),
+                        appState.upcomingMovies
+                    )
+                )
+
+                categoriesRecyclerview.adapter =
+                    CategoryWithMoviesAdapter(categoriesWithMovies, onItemClickListener)
+
+                mainConstraint.showSnackBar(R.string.success)
             }
+
             is AppState.Error -> {
                 progressBar.visibility = View.GONE
-                mainGroup.visibility = View.GONE
-                Snackbar
-                    .make(mainConstraint, "Error", Snackbar.LENGTH_SHORT)
-                    .setAction("Reload") { homeViewModel.fetchData() }
-                    .show()
+                categoriesRecyclerview.visibility = View.GONE
+
+                mainConstraint.showSnackBar(
+                    R.string.error,
+                    actionStringId = R.string.reload
+                ) { homeViewModel.fetchData() }
             }
         }
     }
