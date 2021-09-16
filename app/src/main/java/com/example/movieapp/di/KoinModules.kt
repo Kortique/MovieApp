@@ -1,6 +1,7 @@
 package com.example.movieapp.di
 
 import com.example.movieapp.datasources.DataSource
+import com.example.movieapp.datasources.RemoteDataSourceImpl
 import com.example.movieapp.datasources.DummyDataSourceImpl
 import com.example.movieapp.repositories.MoviesRepository
 import com.example.movieapp.repositories.MoviesRepositoryImpl
@@ -12,6 +13,10 @@ import org.koin.dsl.module
 
 val appModule = module {
 
+    single<DataSource> { RemoteDataSourceImpl() }
+    single<MoviesRepository> { MoviesRepositoryImpl(get()) }
+
+    // view models
     single<DataSource> { DummyDataSourceImpl() }
 
     single<MoviesRepository> { MoviesRepositoryImpl(get()) }
