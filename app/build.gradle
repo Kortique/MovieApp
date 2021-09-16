@@ -58,6 +58,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
 
+    //GSON
+    implementation 'com.google.code.gson:gson:2.8.6'
+
     // Koin
     implementation "io.insert-koin:koin-android:3.1.2"
 
