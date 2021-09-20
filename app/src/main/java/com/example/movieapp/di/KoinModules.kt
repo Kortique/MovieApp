@@ -16,7 +16,6 @@ val appModule = module {
     single<DataSource> { RemoteDataSourceImpl() }
     single<MoviesRepository> { MoviesRepositoryImpl(get()) }
 
-    // view models
     single<DataSource> { DummyDataSourceImpl() }
 
     single<MoviesRepository> { MoviesRepositoryImpl(get()) }
