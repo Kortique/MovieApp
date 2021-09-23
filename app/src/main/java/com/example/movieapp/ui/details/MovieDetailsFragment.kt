@@ -5,6 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import coil.load
+import com.example.movieapp.BuildConfig
+import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMovieDetailsBinding
 import com.example.movieapp.entities.Movie
 import com.example.movieapp.utils.toString
@@ -49,6 +52,11 @@ class MovieDetailsFragment : Fragment() {
                 movieTitle.text = it.title
                 movieReleaseDate.text = it.releaseDate.toString("yyyy-MM-dd")
                 movieOverview.text = it.overview
+
+                moviePoster.load("${BuildConfig.IMAGE_TMDB_BASE_URL}${BuildConfig.IMAGE_TMDB_RELATIVE_PATH}${it.posterPath}") {
+                    crossfade(true)
+                    placeholder(R.drawable.ic_image)
+                }
             }
         }
     }
