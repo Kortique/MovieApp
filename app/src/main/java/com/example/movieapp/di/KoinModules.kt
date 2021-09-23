@@ -2,7 +2,6 @@ package com.example.movieapp.di
 
 import com.example.movieapp.datasources.DataSource
 import com.example.movieapp.datasources.RemoteDataSourceImpl
-import com.example.movieapp.datasources.DummyDataSourceImpl
 import com.example.movieapp.repositories.MoviesRepository
 import com.example.movieapp.repositories.MoviesRepositoryImpl
 import com.example.movieapp.ui.favorites.FavoritesViewModel
@@ -13,13 +12,12 @@ import org.koin.dsl.module
 
 val appModule = module {
 
-    single<DataSource> { RemoteDataSourceImpl() }
+    single<DataSource> { RemoteDataSourceImpl(get()) }
     single<MoviesRepository> { MoviesRepositoryImpl(get()) }
 
-
-    single<DataSource> { DummyDataSourceImpl() }
-
-    single<MoviesRepository> { MoviesRepositoryImpl(get()) }
+    single { NetworkModule.getOkHttpClient() }
+    single { NetworkModule.getRetrofit(get()) }
+    single { NetworkModule.getMovieDbService(get()) }
 
     viewModel { HomeViewModel(get()) }
     viewModel { FavoritesViewModel() }
