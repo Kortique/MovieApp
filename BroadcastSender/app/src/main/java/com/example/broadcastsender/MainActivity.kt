@@ -4,12 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.rino.broadcastsender.databinding.ActivityMainBinding
+import com.example.broadcastsender.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        private const val ACTION_SEND_MESSAGE = "com.rino.broadcastsender.message"
+        private const val ACTION_SEND_MESSAGE = "com.example.broadcastsender.message"
         private const val NAME_MESSAGE = "MESSAGE"
         private const val FLAG_RECEIVER_INCLUDE_BACKGROUND = 0x01000000
     }
