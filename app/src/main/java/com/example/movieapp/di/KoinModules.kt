@@ -8,6 +8,7 @@ import com.example.movieapp.ui.favorites.FavoritesViewModel
 import com.example.movieapp.ui.home.HomeViewModel
 import com.example.movieapp.ui.ratings.RatingsViewModel
 import com.example.movieapp.ui.settings.SettingsViewModel
+import com.example.movieapp.wrappers.MainSharedPreferencesWrapper
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -19,9 +20,10 @@ val appModule = module {
     single { NetworkModule.getOkHttpClient() }
     single { NetworkModule.getRetrofit(get()) }
     single { NetworkModule.getMovieDbService(get()) }
+    single { MainSharedPreferencesWrapper(get()) }
 
-    viewModel { HomeViewModel(get()) }
+    viewModel { HomeViewModel(get(), get()) }
     viewModel { FavoritesViewModel() }
     viewModel { RatingsViewModel() }
-    viewModel { SettingsViewModel() }
+    viewModel { SettingsViewModel(get()) }
 }
