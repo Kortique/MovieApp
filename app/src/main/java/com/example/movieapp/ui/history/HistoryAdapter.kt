@@ -13,7 +13,8 @@ import com.example.movieapp.utils.toString
 
 class HistoryAdapter(
     context: Context,
-    private val items: List<HistoryWithMovie>
+    private val items: List<HistoryWithMovie>,
+    private val onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder>() {
 
     private val circularProgressDrawable by lazy {
@@ -23,38 +24,37 @@ class HistoryAdapter(
             start()
         }
     }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = HistoryItemBinding.inflate(layoutInflater, parent, false)
         return HistoryViewHolder(binding)
     }
-
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
         holder.bind(items[position])
     }
-
     override fun getItemCount(): Int = items.size
-
     inner class HistoryViewHolder(
         val binding: HistoryItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(item: HistoryWithMovie) {
             with(binding) {
                 val title = "${item.movie.title} (${item.movie.releaseDate.toString("yyyy")})"
                 movieTitle.text = title
-
                 viewingDate.text = item.viewingDate.toString("yyyy-MM-dd HH:mm:ss")
-
                 Glide.with(moviePoster.context)
                     .load("${BuildConfig.IMAGE_TMDB_BASE_URL}${BuildConfig.IMAGE_TMDB_RELATIVE_PATH}${item.movie.posterPath}")
                     .centerCrop()
                     .placeholder(circularProgressDrawable)
                     .into(moviePoster)
+
+                rootLayout.setOnClickListener { onItemClickListener.onItemClick(item.movieId) }
             }
         }
 
+    }
+
+    interface OnItemClickListener {
+        fun onItemClick(movieId: Long)
     }
 
 }

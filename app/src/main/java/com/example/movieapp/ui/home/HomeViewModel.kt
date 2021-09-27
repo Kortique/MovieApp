@@ -47,13 +47,18 @@ class HomeViewModel(
                 upcomingMovies = upcomingMovies.filter { !it.adult }
             }
 
-            _appState.postValue(AppState.Success(nowPlayingMovies, upcomingMovies))
-        }.start()
-    }
+            _appState.postValue(
+                AppState.Success(
+                    nowPlayingMovies.sortedByDescending { it.releaseDate },
+                    upcomingMovies.sortedByDescending { it.releaseDate }
+                )
+            )
+        }
 
-    fun saveToHistory(movie: Movie) = uiScope.launch(Dispatchers.IO) {
-        moviesRepository.saveMovie(movie)
-        moviesRepository.saveMovieToHistory(movie.id)
-    }
+        fun saveToHistory(movie: Movie) = uiScope.launch(Dispatchers.IO) {
+            moviesRepository.saveMovie(movie)
+            moviesRepository.saveMovieToHistory(movie.id)
+        }
 
+    }
 }

@@ -5,6 +5,7 @@ import com.example.movieapp.datasources.DataSource
 import com.example.movieapp.datasources.RemoteDataSourceImpl
 import com.example.movieapp.repositories.MoviesRepository
 import com.example.movieapp.repositories.MoviesRepositoryImpl
+import com.example.movieapp.ui.details.MovieDetailsViewModel
 import com.example.movieapp.ui.favorites.FavoritesViewModel
 import com.example.movieapp.ui.history.HistoryViewModel
 import com.example.movieapp.ui.home.HomeViewModel
@@ -37,4 +38,5 @@ val appModule = module {
     viewModel { RatingsViewModel() }
     viewModel { SettingsViewModel(get()) }
     viewModel { HistoryViewModel(get()) }
+    viewModel { MovieDetailsViewModel(get()) }
 }

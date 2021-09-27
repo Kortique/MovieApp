@@ -3,7 +3,7 @@ package com.example.movieapp.database.entites
 import androidx.room.Relation
 import java.util.*
 
-class HistoryWithMovie(
+data class HistoryWithMovie(
     val id: Long,
     val movieId: Long,
     val viewingDate: Date,

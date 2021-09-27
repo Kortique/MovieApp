@@ -18,5 +18,6 @@
     <string name="movie_note_hint">Here you can leave a note about the movie</string>
     <string name="history">History</string>
     <string name="viewing_date">Viewing date:</string>
+    <string name="overview">Overview</string>
 </resources>
 

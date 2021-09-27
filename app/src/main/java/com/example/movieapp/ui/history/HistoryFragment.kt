@@ -6,23 +6,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.example.movieapp.R
 import com.example.movieapp.database.entites.HistoryWithMovie
 import com.example.movieapp.databinding.FragmentHistoryBinding
 import com.example.movieapp.databinding.ProgressBarAndErrorMsgBinding
-import com.example.movieapp.entities.ScreenWithListState
+import com.example.movieapp.entities.ScreenState
+import com.example.movieapp.ui.details.MovieDetailsFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HistoryFragment : Fragment() {
-
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
-
     private var _includeBinding: ProgressBarAndErrorMsgBinding? = null
     private val includeBinding get() = _includeBinding!!
-
     private val historyViewModel: HistoryViewModel by viewModel()
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,7 +31,6 @@ class HistoryFragment : Fragment() {
         _includeBinding = ProgressBarAndErrorMsgBinding.bind(binding.root)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         historyViewModel.state.observe(viewLifecycleOwner) { state ->
@@ -40,15 +38,14 @@ class HistoryFragment : Fragment() {
         }
     }
 
-    @Suppress("UNCHECKED_CAST")
-    private fun processData(state: ScreenWithListState) {
+    private fun processData(state: ScreenState<List<HistoryWithMovie>>) {
         when (state) {
-            ScreenWithListState.Loading -> {
+            ScreenState.Loading -> {
                 includeBinding.progressBar.isVisible = true
                 binding.historyRecyclerView.isVisible = false
             }
 
-            is ScreenWithListState.Success<*> -> {
+            is ScreenState.Success -> {
                 includeBinding.progressBar.isVisible = false
 
                 with(binding.historyRecyclerView) {
@@ -60,14 +57,28 @@ class HistoryFragment : Fragment() {
                         )
                     )
 
+                    val onItemClickListener = object : HistoryAdapter.OnItemClickListener {
+                        override fun onItemClick(movieId: Long) {
+                            val bundle = Bundle().apply {
+                                putLong(MovieDetailsFragment.MOVIE_ID_ARG, movieId)
+                            }
+
+                            findNavController().navigate(
+                                R.id.action_navigation_history_to_movie_details,
+                                bundle
+                            )
+                        }
+                    }
+
                     adapter = HistoryAdapter(
                         requireContext(),
-                        state.items as List<HistoryWithMovie>
+                        state.data,
+                        onItemClickListener
                     )
                 }
             }
 
-            is ScreenWithListState.Error -> {
+            is ScreenState.Error -> {
                 includeBinding.progressBar.isVisible = false
                 binding.historyRecyclerView.isVisible = false
 
@@ -75,10 +86,13 @@ class HistoryFragment : Fragment() {
                     isVisible = true
                     text = state.error.message
                 }
-
             }
-
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }
