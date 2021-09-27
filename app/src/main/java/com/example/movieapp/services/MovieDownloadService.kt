@@ -70,7 +70,6 @@ class MovieDownloadService : Service() {
                 .getInstance(this@MovieDownloadService)
                 .sendBroadcast(broadcastIntent)
         }
-
         return START_STICKY
     }
 }
