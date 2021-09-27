@@ -3,6 +3,7 @@ package com.example.movieapp.ui.details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.movieapp.database.entites.Favorite
 import com.example.movieapp.database.entites.MovieWithNote
 import com.example.movieapp.database.entites.Note
 import com.example.movieapp.entities.ScreenState
@@ -32,6 +33,16 @@ class MovieDetailsViewModel(
 
     fun saveNote(movieId: Long, note: String) = uiScope.launch(Dispatchers.IO) {
         moviesRepository.saveNote(Note(movieId, note))
+    }
+
+    fun onFavoriteEvent(movieWithNote: MovieWithNote) {
+        uiScope.launch(Dispatchers.IO) {
+            if (movieWithNote.isFavorite) {
+                moviesRepository.addMovieToFavorite(Favorite(movieId = movieWithNote.id))
+            } else {
+                moviesRepository.removeMovieFromFavorite(movieWithNote.id)
+            }
+        }
     }
 
 }

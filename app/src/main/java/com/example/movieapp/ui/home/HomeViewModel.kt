@@ -3,6 +3,7 @@ package com.example.movieapp.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.movieapp.database.entites.Favorite
 import com.example.movieapp.entities.AppState
 import com.example.movieapp.entities.Movie
 import com.example.movieapp.repositories.MoviesRepository
@@ -47,18 +48,36 @@ class HomeViewModel(
                 upcomingMovies = upcomingMovies.filter { !it.adult }
             }
 
+            val favoritesMovieIds = moviesRepository.getAllFavoritesMoviesIds()
+
+            favoritesMovieIds.forEach { favoriteMovieId ->
+                val movie = nowPlayingMovies.firstOrNull { it.id == favoriteMovieId }
+                movie?.let { it.isFavorite = true }
+            }
+
             _appState.postValue(
                 AppState.Success(
                     nowPlayingMovies.sortedByDescending { it.releaseDate },
                     upcomingMovies.sortedByDescending { it.releaseDate }
                 )
             )
-        }
+        }.start()
+    }
 
-        fun saveToHistory(movie: Movie) = uiScope.launch(Dispatchers.IO) {
+    fun saveToHistory(movie: Movie) = uiScope.launch(Dispatchers.IO) {
+        moviesRepository.saveMovie(movie)
+        moviesRepository.saveMovieToHistory(movie.id)
+    }
+
+    fun onFavoriteEvent(movie: Movie, isFavorite: Boolean) {
+        uiScope.launch(Dispatchers.IO) {
             moviesRepository.saveMovie(movie)
-            moviesRepository.saveMovieToHistory(movie.id)
-        }
 
+            if (isFavorite) {
+                moviesRepository.addMovieToFavorite(Favorite(movieId = movie.id))
+            } else {
+                moviesRepository.removeMovieFromFavorite(movie.id)
+            }
+        }
     }
 }

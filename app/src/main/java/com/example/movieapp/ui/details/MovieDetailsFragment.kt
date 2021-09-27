@@ -13,6 +13,7 @@ import com.example.movieapp.databinding.FragmentMovieDetailsBinding
 import com.example.movieapp.databinding.ProgressBarAndErrorMsgBinding
 import com.example.movieapp.entities.ScreenState
 import com.example.movieapp.utils.toString
+import com.example.movieapp.utils.processFavorite
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieDetailsFragment : Fragment() {
@@ -94,6 +95,13 @@ class MovieDetailsFragment : Fragment() {
                                 .into(moviePoster)
 
                             movieNote.setText(note?.note)
+
+                            movieFavorite.processFavorite(movieWithNote.isFavorite)
+                            movieFavorite.setOnClickListener {
+                                movieWithNote.isFavorite = !movieWithNote.isFavorite
+                                movieFavorite.processFavorite(movieWithNote.isFavorite)
+                                detailsViewModel.onFavoriteEvent(movieWithNote)
+                            }
                         }
                     }
 

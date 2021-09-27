@@ -13,12 +13,14 @@ import com.example.movieapp.databinding.UpcomingMovieItemBinding
 import com.example.movieapp.entities.Movie
 import com.example.movieapp.entities.MoviesCategory
 import com.example.movieapp.utils.toString
+import com.example.movieapp.utils.processFavorite
 
 class MoviesAdapter(
     context: Context,
     private val movies: List<Movie>,
     private val moviesCategory: MoviesCategory,
-    private val onItemClickListener: OnItemClickListener
+    private val onItemClickListener: OnItemClickListener,
+    private val onFavoriteClickListener: OnFavoriteClickListener
 ) : RecyclerView.Adapter<MoviesAdapter.MovieViewHolder>() {
 
     private val circularProgressDrawable by lazy {
@@ -74,8 +76,15 @@ class MoviesAdapter(
                 .into(moviePoster)
 
             movieCard.setOnClickListener { onItemClickListener.onItemClick(movie) }
-        }
 
+            favorite.processFavorite(movie.isFavorite ?: false)
+            favorite.setOnClickListener {
+                movie.isFavorite = !(movie.isFavorite ?: false)
+                favorite.processFavorite(movie.isFavorite ?: false)
+
+                onFavoriteClickListener.onFavorite(movie, movie.isFavorite ?: false)
+            }
+        }
     }
 
     inner class UpcomingMovieViewHolder(
@@ -99,5 +108,9 @@ class MoviesAdapter(
 
     interface OnItemClickListener {
         fun onItemClick(movie: Movie)
+    }
+
+    interface OnFavoriteClickListener {
+        fun onFavorite(movie: Movie, isFavorite: Boolean)
     }
 }

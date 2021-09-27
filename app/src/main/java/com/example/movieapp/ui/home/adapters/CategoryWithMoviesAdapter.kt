@@ -8,26 +8,22 @@ import com.example.movieapp.entities.CategoryWithMovies
 
 class CategoryWithMoviesAdapter(
     private val categoriesWithMovies: List<CategoryWithMovies>,
-    private val onItemClickListener: MoviesAdapter.OnItemClickListener
+    private val onItemClickListener: MoviesAdapter.OnItemClickListener,
+    private val onFavoriteClickListener: MoviesAdapter.OnFavoriteClickListener
 ) : RecyclerView.Adapter<CategoryWithMoviesAdapter.CategoryWithMovieViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryWithMovieViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = CategoryItemBinding.inflate(layoutInflater, parent, false)
-
         return CategoryWithMovieViewHolder(binding)
     }
-
     override fun onBindViewHolder(holder: CategoryWithMovieViewHolder, position: Int) {
         holder.bind(categoriesWithMovies[position])
     }
-
     override fun getItemCount(): Int = categoriesWithMovies.count()
-
     inner class CategoryWithMovieViewHolder(
         private val binding: CategoryItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(categoryWithMovies: CategoryWithMovies) {
             with(binding) {
                 categoryTitle.text = categoryWithMovies.categoryTitle
@@ -35,12 +31,10 @@ class CategoryWithMoviesAdapter(
                     itemView.context,
                     categoryWithMovies.movies,
                     categoryWithMovies.category,
-                    onItemClickListener
+                    onItemClickListener,
+                    onFavoriteClickListener
                 )
             }
         }
-
     }
-
-
 }
