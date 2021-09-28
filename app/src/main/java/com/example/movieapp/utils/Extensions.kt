@@ -1,7 +1,10 @@
 package com.example.movieapp.utils
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.PorterDuff
+import android.net.Uri
+import android.provider.Settings
 import android.view.View
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -27,7 +30,7 @@ fun View.showSnackBar(
     @StringRes stringId: Int,
     duration: Int = Snackbar.LENGTH_SHORT,
     @StringRes actionStringId: Int? = null,
-    action: View.OnClickListener? = null
+    action: View.OnClickListener? = null,
 ) {
     val snackBar = Snackbar.make(this, stringId, duration)
 
@@ -42,7 +45,7 @@ fun View.showSnackBar(
     msg: String,
     duration: Int = Snackbar.LENGTH_SHORT,
     @StringRes actionStringId: Int? = null,
-    action: View.OnClickListener? = null
+    action: View.OnClickListener? = null,
 ) {
     val snackBar = Snackbar.make(this, msg, duration)
 
@@ -87,4 +90,34 @@ fun AppCompatImageView.processFavorite(isFavorite: Boolean) {
     } else {
         clearColorFilter()
     }
+}
+
+fun Context.openAppSystemSettings() {
+    val settingsIntent = Intent().apply {
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        data = Uri.fromParts("package", packageName, null)
+    }
+
+    startActivity(settingsIntent)
+}
+
+fun Context.makeCall(phoneNumber: String) {
+    val callIntent = Intent(Intent.ACTION_DIAL).apply {
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        data = Uri.parse("tel:$phoneNumber")
+    }
+
+    startActivity(callIntent)
+}
+
+fun Context.sendSms(phoneNumber: String, msg: String) {
+    val sendToIntent = Intent(Intent.ACTION_SENDTO).apply {
+        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        type = "text/plain"
+        putExtra("sms_body", msg);
+        data = Uri.parse("smsto:$phoneNumber")
+    }
+
+    startActivity(sendToIntent)
 }

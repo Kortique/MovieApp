@@ -23,12 +23,11 @@ android {
         properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
         def apiKey = properties.getProperty("moviedb_api_key", "")
         it.buildConfigField "String", "MOVIEDB_API_KEY", apiKey
-
         it.buildConfigField "String", "MOVIEDB_BASE_URL", "\"https://api.themoviedb.org/\""
         it.buildConfigField "Long", "CONNECTION_TIMEOUT", "5L"
-
         it.buildConfigField "String", "IMAGE_TMDB_BASE_URL", "\"https://image.tmdb.org/\""
         it.buildConfigField "String", "IMAGE_TMDB_RELATIVE_PATH", "\"t/p/original\""
+        it.buildConfigField "String", "URL_TO_SHARE", "\"https://www.themoviedb.org/movie/\""
     }
 
     buildTypes {

@@ -41,14 +41,17 @@
         android:id="@+id/movie_details"
         android:name="com.example.movieapp.ui.details.MovieDetailsFragment"
         android:label="Movie details"
-        tools:layout="@layout/fragment_movie_details" />
+        tools:layout="@layout/fragment_movie_details">
+        <action
+            android:id="@+id/action_navigation_details_to_contacts"
+            app:destination="@id/navigation_contacts" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_settings"
         android:name="com.example.movieapp.ui.settings.SettingsFragment"
         android:label="Settings"
         tools:layout="@layout/fragment_settings" />
-
     <fragment
         android:id="@+id/navigation_history"
         android:name="com.example.movieapp.ui.history.HistoryFragment"
@@ -58,5 +61,11 @@
             android:id="@+id/action_navigation_history_to_movie_details"
             app:destination="@id/movie_details" />
     </fragment>
+
+    <fragment
+        android:id="@+id/navigation_contacts"
+        android:name="com.example.movieapp.ui.contacts.ContactsFragment"
+        android:label="Share with contact"
+        tools:layout="@layout/fragment_contacts" />
 
 </navigation>
