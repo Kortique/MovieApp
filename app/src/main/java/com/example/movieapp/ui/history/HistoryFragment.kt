@@ -1,9 +1,8 @@
 package com.example.movieapp.ui.history
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -22,15 +21,22 @@ class HistoryFragment : Fragment() {
     private var _includeBinding: ProgressBarAndErrorMsgBinding? = null
     private val includeBinding get() = _includeBinding!!
     private val historyViewModel: HistoryViewModel by viewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentHistoryBinding.inflate(inflater, container, false)
         _includeBinding = ProgressBarAndErrorMsgBinding.bind(binding.root)
         return binding.root
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         historyViewModel.state.observe(viewLifecycleOwner) { state ->
@@ -90,8 +96,27 @@ class HistoryFragment : Fragment() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.history_menu, menu)
+
+        val search = menu.findItem(R.id.action_search)
+        val searchView = search.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean = true
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                historyViewModel.searchByQuery(query)
+                return true
+            }
+        })
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        historyViewModel.searchByQuery(null)
         _binding = null
     }
 
