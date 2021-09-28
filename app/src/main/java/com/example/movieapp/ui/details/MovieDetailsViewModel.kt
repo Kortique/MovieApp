@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MovieDetailsViewModel(
-    private val moviesRepository: MoviesRepository
+    private val moviesRepository: MoviesRepository,
 ) : ViewModel() {
     private val uiScope = MainScope()
     private val _state: MutableLiveData<ScreenState<MovieWithNote>> =
@@ -34,9 +34,11 @@ class MovieDetailsViewModel(
             _state.value = ScreenState.Success(item)
         }
     }
+
     fun saveNote(movieId: Long, note: String) = uiScope.launch(Dispatchers.IO) {
         moviesRepository.saveNote(Note(movieId, note))
     }
+
     fun onFavoriteEvent(movieWithNote: MovieWithNote) {
         uiScope.launch(Dispatchers.IO) {
             if (movieWithNote.isFavorite) {
