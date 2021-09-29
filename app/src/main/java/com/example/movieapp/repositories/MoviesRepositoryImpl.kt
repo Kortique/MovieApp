@@ -13,9 +13,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class MoviesRepositoryImpl(
+
     private val dataSource: DataSource,
     private val movieSetDao: MovieSetDao,
-    private val movieGetDao: MovieGetDao
+    private val movieGetDao: MovieGetDao,
+
 ) : MoviesRepository {
     override fun getNowPlayingMovies(): Result<List<Movie>> = dataSource.getNowPlayingMovies()
 
@@ -30,6 +32,7 @@ class MoviesRepositoryImpl(
         val history = History(movieId = movieId)
         movieSetDao.insertToHistory(history)
     }
+
     override fun getHistoryWithMovies() = movieGetDao.getHistoryWithMovies()
     override fun getMovieById(id: Long): Movie = movieGetDao.getMovieById(id).coreModel
 
@@ -42,6 +45,7 @@ class MoviesRepositoryImpl(
 
     override fun removeMovieFromFavorite(movieId: Long) =
         movieSetDao.deleteFromFavouriteByMovieId(movieId)
+
     override fun getAllFavoritesMoviesIds(): List<Long> = movieGetDao.getAllFavoritesMoviesIds()
     override fun getFavoritesMoviesFlow(): Flow<List<Movie>> =
         movieGetDao.getFavoritesMoviesFlow()

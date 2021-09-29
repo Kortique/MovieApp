@@ -6,14 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.example.movieapp.BuildConfig
+import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentPersonBinding
 import com.example.movieapp.databinding.ProgressBarAndErrorMsgBinding
 import com.example.movieapp.entities.ScreenState
 import com.example.movieapp.remote.entites.PersonDTO
 import com.example.movieapp.ui.details.MovieDetailsFragment
+import com.example.movieapp.ui.map.MapFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class PersonFragment : Fragment() {
@@ -69,7 +72,7 @@ class PersonFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         personViewModel.state.observe(viewLifecycleOwner) { state ->
-            state?.let{ processData(it) }
+            state?.let { processData(it) }
         }
     }
 
@@ -94,7 +97,20 @@ class PersonFragment : Fragment() {
 
                     personName.text = person.name
                     personBirthday.text = person.birthday
-                    personPlaceOfBirth.text = person.placeOfBirth
+
+                    with(personPlaceOfBirth) {
+                        text = person.placeOfBirth
+                        setOnClickListener {
+                            val bundle = Bundle().apply {
+                                putString(MapFragment.ADDRESS_TAG, person.placeOfBirth)
+                            }
+                            findNavController().navigate(
+                                R.id.action_navigation_person_to_map,
+                                bundle
+                            )
+                        }
+                    }
+
                     personBiography.text = person.biography
                 }
             }

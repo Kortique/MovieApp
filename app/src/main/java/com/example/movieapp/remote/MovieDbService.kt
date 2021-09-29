@@ -28,6 +28,7 @@ interface MovieDbService {
     @GET("3/movie/{movieId}")
     fun getMovieDetails(
         @Path("movieId") movieId: Long,
+        @Query("api_key") key: String = BuildConfig.MOVIEDB_API_KEY,
         @Query("language") language: String = "en-US",
         @Query("append_to_response") appendToResponse: String = "credits"
     ): Call<MovieDetailsDTO>
@@ -35,6 +36,7 @@ interface MovieDbService {
     @GET("3/person/{personId}")
     fun getPerson(
         @Path("personId") personId: Long,
+        @Query("api_key") key: String = BuildConfig.MOVIEDB_API_KEY,
         @Query("language") language: String = "en-US"
     ): Call<PersonDTO>
 }
