@@ -17,9 +17,14 @@
         <entry key="..\:/StudyAndroid/BasicAndroid/MovieApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.35260416666666666" />
         <entry key="..\:/StudyAndroid/BasicAndroid/MovieApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2712962962962963" />
         <entry key="..\:/StudyAndroid/BasicAndroid/MovieApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2712962962962963" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/drawable/ic_account.xml" value="0.2740740740740741" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/drawable/ic_call.xml" value="0.2740740740740741" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/drawable/ic_chart_outlined.xml" value="0.2740740740740741" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.2740740740740741" />
         <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/drawable/ic_favorite_border.xml" value="0.2109375" />
         <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/drawable/ic_image.xml" value="0.2740740740740741" />
         <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/activity_main.xml" value="0.19479166666666667" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/actor_item.xml" value="0.3546875" />
         <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/category_item.xml" value="0.19479166666666667" />
         <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/contact_item.xml" value="0.3546875" />
         <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/favorite_item.xml" value="0.19479166666666667" />

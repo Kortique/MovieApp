@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentHomeBinding
@@ -16,33 +17,32 @@ import com.example.movieapp.ui.details.MovieDetailsFragment
 import com.example.movieapp.ui.home.adapters.CategoryWithMoviesAdapter
 import com.example.movieapp.ui.home.adapters.MoviesAdapter
 import com.example.movieapp.utils.showSnackBar
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
-
     private val homeViewModel: HomeViewModel by viewModel()
     private var _binding: FragmentHomeBinding? = null
-
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
     private var _includeBinding: ProgressBarAndErrorMsgBinding? = null
     private val includeBinding get() = _includeBinding!!
-
     private val onItemClickListener by lazy {
         object : MoviesAdapter.OnItemClickListener {
             override fun onItemClick(movie: Movie) {
-                homeViewModel.saveToHistory(movie)
+                homeViewModel.viewModelScope.launch {
+                    homeViewModel.saveToHistoryAsync(movie).await()
 
-                val bundle = Bundle().apply {
-                    putLong(MovieDetailsFragment.MOVIE_ID_ARG, movie.id)
+                    val bundle = Bundle().apply {
+                        putLong(MovieDetailsFragment.MOVIE_ID_ARG, movie.id)
+                    }
+
+                    findNavController().navigate(
+                        R.id.action_navigation_home_to_movie_details,
+                        bundle
+                    )
                 }
-
-                findNavController().navigate(
-                    R.id.action_navigation_home_to_movie_details,
-                    bundle
-                )
             }
         }
     }

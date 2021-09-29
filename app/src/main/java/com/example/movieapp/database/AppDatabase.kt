@@ -6,16 +6,13 @@ import androidx.room.TypeConverters
 import com.example.movieapp.database.converters.DateConverter
 import com.example.movieapp.database.dao.MovieGetDao
 import com.example.movieapp.database.dao.MovieSetDao
-import com.example.movieapp.database.entites.Favorite
-import com.example.movieapp.database.entites.History
-import com.example.movieapp.database.entites.Movie
-import com.example.movieapp.database.entites.Note
+import com.example.movieapp.database.entites.*
 
 @Database(
     entities = [
-        Movie::class, History::class, Note::class, Favorite::class
+        Movie::class, History::class, Note::class, Favorite::class, Actor::class, MovieActorCrossRef::class
     ],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(DateConverter::class)

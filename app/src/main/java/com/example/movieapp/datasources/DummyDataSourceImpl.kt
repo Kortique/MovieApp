@@ -1,14 +1,15 @@
 package com.example.movieapp.datasources
 
 import com.example.movieapp.entities.Movie
+import com.example.movieapp.remote.entites.MovieDetailsDTO
+import com.example.movieapp.remote.entites.PersonDTO
 import com.example.movieapp.utils.toDate
 import java.util.*
 
 class DummyDataSourceImpl : DataSource {
     override fun getNowPlayingMovies(): Result<List<Movie>> = Result.success(
         listOf(
-            Movie(
-                1,
+            Movie(1,
                 "/poster.jpg",
                 false,
                 "Overview",
@@ -21,10 +22,8 @@ class DummyDataSourceImpl : DataSource {
                 6.9,
                 1,
                 false,
-                4.41
-            ),
-            Movie(
-                2,
+                4.41),
+            Movie(2,
                 "/poster.jpg",
                 false,
                 "Overview",
@@ -37,10 +36,8 @@ class DummyDataSourceImpl : DataSource {
                 5.7,
                 1,
                 false,
-                4.41
-            ),
-            Movie(
-                3,
+                4.41),
+            Movie(3,
                 "/poster.jpg",
                 false,
                 "Overview",
@@ -53,10 +50,8 @@ class DummyDataSourceImpl : DataSource {
                 5.91,
                 1,
                 false,
-                4.41
-            ),
-            Movie(
-                4,
+                4.41),
+            Movie(4,
                 "/poster.jpg",
                 false,
                 "Overview",
@@ -69,15 +64,13 @@ class DummyDataSourceImpl : DataSource {
                 5.91,
                 1,
                 false,
-                4.41
-            ),
+                4.41),
         )
     )
 
     override fun getUpcomingMovies(): Result<List<Movie>> = Result.success(
         listOf(
-            Movie(
-                5,
+            Movie(5,
                 "/poster.jpg",
                 false,
                 "Overview",
@@ -90,10 +83,8 @@ class DummyDataSourceImpl : DataSource {
                 4.546151,
                 1,
                 false,
-                4.41
-            ),
-            Movie(
-                6,
+                4.41),
+            Movie(6,
                 "/poster.jpg",
                 false,
                 "Overview",
@@ -106,10 +97,8 @@ class DummyDataSourceImpl : DataSource {
                 3.51555,
                 1,
                 false,
-                4.41
-            ),
-            Movie(
-                7,
+                4.41),
+            Movie(7,
                 "/poster.jpg",
                 false,
                 "Overview",
@@ -122,10 +111,8 @@ class DummyDataSourceImpl : DataSource {
                 3.254896,
                 1,
                 false,
-                4.41
-            ),
-            Movie(
-                8,
+                4.41),
+            Movie(8,
                 "/poster.jpg",
                 false,
                 "Overview",
@@ -138,8 +125,12 @@ class DummyDataSourceImpl : DataSource {
                 3.218451,
                 1,
                 false,
-                4.41
-            ),
+                4.41),
         )
     )
+
+    override fun getMovieDetails(movieId: Long): Result<MovieDetailsDTO?> = Result.success(null)
+
+    override fun getPerson(personId: Long): Result<PersonDTO?> = Result.success(null)
+
 }

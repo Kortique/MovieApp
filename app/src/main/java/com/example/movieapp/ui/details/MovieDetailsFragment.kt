@@ -15,13 +15,13 @@ import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentMovieDetailsBinding
 import com.example.movieapp.databinding.ProgressBarAndErrorMsgBinding
 import com.example.movieapp.entities.ScreenState
-import com.example.movieapp.utils.openAppSystemSettings
-import com.example.movieapp.utils.processFavorite
-import com.example.movieapp.utils.showSnackBar
-import com.example.movieapp.utils.toString
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import android.Manifest
+import androidx.core.view.isGone
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.example.movieapp.entities.Actor
 import com.example.movieapp.ui.contacts.ContactsFragment
+import com.example.movieapp.utils.*
 
 class MovieDetailsFragment : Fragment() {
     companion object {
@@ -97,31 +97,54 @@ class MovieDetailsFragment : Fragment() {
                     }
 
                     is ScreenState.Success -> {
-                        val movieWithNote = state.data
-                        val movie = movieWithNote.movie
-                        val note = movieWithNote.note
+                        val movieExtended = state.data
+                        val movie = movieExtended.movie
+                        val note = movieExtended.note
+
+                        val actors = movieExtended.actors.asSequence()
+                            .sortedBy { it.order }
+                            .map { Actor(it.id, it.name, it.order) }
+                            .take(10)
+                            .toList()
 
                         with(binding) {
                             visibilityGroup.isVisible = true
                             includeBinding.progressBar.isVisible = false
 
+                            Glide.with(requireContext())
+                                .load("${BuildConfig.IMAGE_TMDB_BASE_URL}${BuildConfig.IMAGE_TMDB_RELATIVE_PATH}${movie.backdropPath}")
+                                .placeholder(circularProgressDrawable)
+                                .into(movieBanner)
+
                             movieTitle.text = movie.title
                             movieReleaseDate.text = movie.releaseDate.toString("yyyy-MM-dd")
                             movieOverview.text = movie.overview
 
+                            with(movieTagline) {
+                                text = movie.tagline
+                                isGone = movie.tagline.isNullOrEmpty()
+                            }
+
+                            movieDirector.text = movie.director
+                            movieBudget.text = movie.budget?.formatCurrency()
+
                             Glide.with(requireContext())
                                 .load("${BuildConfig.IMAGE_TMDB_BASE_URL}${BuildConfig.IMAGE_TMDB_RELATIVE_PATH}${movie.posterPath}")
-                                .centerCrop()
                                 .placeholder(circularProgressDrawable)
                                 .into(moviePoster)
 
                             movieNote.setText(note?.note)
 
-                            movieFavorite.processFavorite(movieWithNote.isFavorite)
+                            movieFavorite.processFavorite(movieExtended.isFavorite)
                             movieFavorite.setOnClickListener {
-                                movieWithNote.isFavorite = !movieWithNote.isFavorite
-                                movieFavorite.processFavorite(movieWithNote.isFavorite)
-                                detailsViewModel.onFavoriteEvent(movieWithNote)
+                                movieExtended.isFavorite = !movieExtended.isFavorite
+                                movieFavorite.processFavorite(movieExtended.isFavorite)
+                                detailsViewModel.onFavoriteEvent(movieExtended)
+                            }
+
+                            with(movieActorsRecyclerView) {
+                                layoutManager = FlexboxLayoutManager(context)
+                                adapter = ActorsAdapter(actors)
                             }
                         }
                     }

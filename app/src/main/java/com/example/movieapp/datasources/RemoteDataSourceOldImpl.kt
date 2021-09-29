@@ -3,7 +3,9 @@ package com.example.movieapp.datasources
 import com.google.gson.Gson
 import com.example.movieapp.BuildConfig
 import com.example.movieapp.entities.Movie
+import com.example.movieapp.remote.entites.MovieDetailsDTO
 import com.example.movieapp.remote.entites.MoviesDTO
+import com.example.movieapp.remote.entites.PersonDTO
 import com.example.movieapp.utils.getLines
 import java.net.MalformedURLException
 import java.net.URL
@@ -70,5 +72,9 @@ class RemoteDataSourceOldImpl : DataSource {
             return Result.failure(e)
         }
     }
+
+    override fun getMovieDetails(movieId: Long): Result<MovieDetailsDTO?> = Result.success(null)
+
+    override fun getPerson(personId: Long): Result<PersonDTO?> = Result.success(null)
 
 }

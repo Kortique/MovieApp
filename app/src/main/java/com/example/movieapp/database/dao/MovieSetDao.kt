@@ -1,10 +1,7 @@
 package com.example.movieapp.database.dao
 
 import androidx.room.*
-import com.example.movieapp.database.entites.Favorite
-import com.example.movieapp.database.entites.History
-import com.example.movieapp.database.entites.Movie
-import com.example.movieapp.database.entites.Note
+import com.example.movieapp.database.entites.*
 
 @Dao
 interface MovieSetDao {
@@ -23,5 +20,19 @@ interface MovieSetDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertToHistory(history: History)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertActors(actors: List<Actor>)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMovieActorCrossRef(entities: List<MovieActorCrossRef>)
+
+    @Transaction
+    fun insertMovieActors(movieId: Long, actors: List<Actor>) {
+        insertActors(actors)
+
+        val movieActorCrossRef = actors.map { MovieActorCrossRef(movieId, it.id) }
+        insertMovieActorCrossRef(movieActorCrossRef)
+    }
 
 }
