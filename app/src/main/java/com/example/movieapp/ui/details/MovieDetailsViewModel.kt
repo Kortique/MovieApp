@@ -3,6 +3,7 @@ package com.example.movieapp.ui.details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.movieapp.BuildConfig
 import com.example.movieapp.database.entites.Favorite
 import com.example.movieapp.database.entites.MovieWithNote
@@ -10,14 +11,13 @@ import com.example.movieapp.database.entites.Note
 import com.example.movieapp.entities.ScreenState
 import com.example.movieapp.repositories.MoviesRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MovieDetailsViewModel(
-    private val moviesRepository: MoviesRepository,
+    private val moviesRepository: MoviesRepository
 ) : ViewModel() {
-    private val uiScope = MainScope()
+
     private val _state: MutableLiveData<ScreenState<MovieWithNote>> =
         MutableLiveData(ScreenState.Loading)
     val state: LiveData<ScreenState<MovieWithNote>> = _state
@@ -25,7 +25,7 @@ class MovieDetailsViewModel(
     var messageToShare: String? = null
 
     fun fetchData(movieId: Long) {
-        uiScope.launch {
+        viewModelScope.launch {
             val item =
                 withContext(Dispatchers.IO) { moviesRepository.getMovieWithNoteById(movieId) }
 
@@ -35,12 +35,12 @@ class MovieDetailsViewModel(
         }
     }
 
-    fun saveNote(movieId: Long, note: String) = uiScope.launch(Dispatchers.IO) {
+    fun saveNote(movieId: Long, note: String) = viewModelScope.launch(Dispatchers.IO) {
         moviesRepository.saveNote(Note(movieId, note))
     }
 
     fun onFavoriteEvent(movieWithNote: MovieWithNote) {
-        uiScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             if (movieWithNote.isFavorite) {
                 moviesRepository.addMovieToFavorite(Favorite(movieId = movieWithNote.id))
             } else {
@@ -48,4 +48,5 @@ class MovieDetailsViewModel(
             }
         }
     }
+
 }

@@ -3,21 +3,19 @@ package com.example.movieapp.ui.home
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.movieapp.database.entites.Favorite
 import com.example.movieapp.entities.AppState
 import com.example.movieapp.entities.Movie
 import com.example.movieapp.repositories.MoviesRepository
 import com.example.movieapp.wrappers.MainSharedPreferencesWrapper
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val moviesRepository: MoviesRepository,
     private val mainPreferences: MainSharedPreferencesWrapper
 ) : ViewModel() {
-
-    private val uiScope = MainScope()
 
     private val _appState: MutableLiveData<AppState> = MutableLiveData(AppState.Loading)
     val appState: LiveData<AppState> = _appState
@@ -64,13 +62,13 @@ class HomeViewModel(
         }.start()
     }
 
-    fun saveToHistory(movie: Movie) = uiScope.launch(Dispatchers.IO) {
+    fun saveToHistory(movie: Movie) = viewModelScope.launch(Dispatchers.IO) {
         moviesRepository.saveMovie(movie)
         moviesRepository.saveMovieToHistory(movie.id)
     }
 
     fun onFavoriteEvent(movie: Movie, isFavorite: Boolean) {
-        uiScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(Dispatchers.IO) {
             moviesRepository.saveMovie(movie)
 
             if (isFavorite) {
