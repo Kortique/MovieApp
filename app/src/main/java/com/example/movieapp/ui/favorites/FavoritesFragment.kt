@@ -12,7 +12,7 @@ import com.example.movieapp.databinding.FragmentFavoritesBinding
 import com.example.movieapp.databinding.ProgressBarAndErrorMsgBinding
 import com.example.movieapp.entities.Movie
 import com.example.movieapp.entities.ScreenState
-import com.example.movieapp.ui.details.MovieDetailsFragment
+import com.example.movieapp.ui.details.MovieDetailsFragmentArgs
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FavoritesFragment : Fragment() {
@@ -21,16 +21,12 @@ class FavoritesFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
     private var _includeBinding: ProgressBarAndErrorMsgBinding? = null
     private val includeBinding get() = _includeBinding!!
-
     private val onItemClickListener by lazy {
         object : FavoritesAdapter.OnItemClickListener {
             override fun onItemClick(movieId: Long) {
-                val bundle = Bundle().apply {
-                    putLong(MovieDetailsFragment.MOVIE_ID_ARG, movieId)
-                }
+                val bundle = MovieDetailsFragmentArgs(movieId).toBundle()
 
                 findNavController().navigate(
                     R.id.action_navigation_favorite_to_movie_details,

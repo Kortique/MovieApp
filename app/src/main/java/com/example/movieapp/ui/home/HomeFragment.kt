@@ -13,7 +13,7 @@ import com.example.movieapp.entities.AppState
 import com.example.movieapp.entities.CategoryWithMovies
 import com.example.movieapp.entities.Movie
 import com.example.movieapp.entities.MoviesCategory
-import com.example.movieapp.ui.details.MovieDetailsFragment
+import com.example.movieapp.ui.details.MovieDetailsFragmentArgs
 import com.example.movieapp.ui.home.adapters.CategoryWithMoviesAdapter
 import com.example.movieapp.ui.home.adapters.MoviesAdapter
 import com.example.movieapp.utils.showSnackBar
@@ -34,9 +34,7 @@ class HomeFragment : Fragment() {
                 homeViewModel.viewModelScope.launch {
                     homeViewModel.saveToHistoryAsync(movie).await()
 
-                    val bundle = Bundle().apply {
-                        putLong(MovieDetailsFragment.MOVIE_ID_ARG, movie.id)
-                    }
+                    val bundle = MovieDetailsFragmentArgs(movie.id).toBundle()
 
                     findNavController().navigate(
                         R.id.action_navigation_home_to_movie_details,

@@ -23,20 +23,16 @@ import com.example.movieapp.databinding.FragmentMovieDetailsBinding
 import com.example.movieapp.databinding.ProgressBarAndErrorMsgBinding
 import com.example.movieapp.entities.Actor
 import com.example.movieapp.entities.ScreenState
-import com.example.movieapp.ui.contacts.ContactsFragment
-import com.example.movieapp.ui.person.PersonFragment
+import com.example.movieapp.ui.contacts.ContactsFragmentArgs
+import com.example.movieapp.ui.person.PersonFragmentArgs
 import com.example.movieapp.utils.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieDetailsFragment : Fragment() {
     companion object {
-        const val MOVIE_ID_ARG = "movieId"
-
         fun newInstance(movieId: Long) =
             MovieDetailsFragment().apply {
-                arguments = Bundle().apply {
-                    putLong(MOVIE_ID_ARG, movieId)
-                }
+                arguments = MovieDetailsFragmentArgs(movieId).toBundle()
             }
 
         fun createDeepLink(context: Context, movieId: Long): PendingIntent {
@@ -84,9 +80,7 @@ class MovieDetailsFragment : Fragment() {
     private val onItemClickListener: ActorsAdapter.OnItemClickListener by lazy {
         object : ActorsAdapter.OnItemClickListener {
             override fun onItemClick(actorId: Long) {
-                val bundle = Bundle().apply {
-                    putLong(PersonFragment.PERSON_ID_ARG, actorId)
-                }
+                val bundle = PersonFragmentArgs(actorId).toBundle()
                 findNavController().navigate(R.id.action_navigation_details_to_person, bundle)
             }
         }
@@ -214,9 +208,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun openShareWithContacts() {
-        val bundle = Bundle().apply {
-            putString(ContactsFragment.MESSAGE_ARG, detailsViewModel.messageToShare)
-        }
+        val bundle = ContactsFragmentArgs(detailsViewModel.messageToShare).toBundle()
 
         findNavController().navigate(
             R.id.action_navigation_details_to_contacts,

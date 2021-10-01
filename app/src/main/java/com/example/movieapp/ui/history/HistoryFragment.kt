@@ -13,6 +13,7 @@ import com.example.movieapp.databinding.FragmentHistoryBinding
 import com.example.movieapp.databinding.ProgressBarAndErrorMsgBinding
 import com.example.movieapp.entities.ScreenState
 import com.example.movieapp.ui.details.MovieDetailsFragment
+import com.example.movieapp.ui.details.MovieDetailsFragmentArgs
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HistoryFragment : Fragment() {
@@ -65,9 +66,7 @@ class HistoryFragment : Fragment() {
 
                     val onItemClickListener = object : HistoryAdapter.OnItemClickListener {
                         override fun onItemClick(movieId: Long) {
-                            val bundle = Bundle().apply {
-                                putLong(MovieDetailsFragment.MOVIE_ID_ARG, movieId)
-                            }
+                            val bundle = MovieDetailsFragmentArgs(movieId).toBundle()
 
                             findNavController().navigate(
                                 R.id.action_navigation_history_to_movie_details,
