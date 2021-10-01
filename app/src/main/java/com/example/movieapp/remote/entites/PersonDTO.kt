@@ -7,7 +7,7 @@ data class PersonDTO(
     val birthday: String,
     @SerializedName("known_for_department")
     val knownForDepartment: String,
-    @SerializedName("birthday")
+    @SerializedName("deathday")
     val deathDay: String?,
     val name: String,
     @SerializedName("also_known_as")

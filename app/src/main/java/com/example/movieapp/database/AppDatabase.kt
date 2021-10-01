@@ -15,7 +15,6 @@ import com.example.movieapp.database.entites.*
     version = 2,
     exportSchema = false
 )
-
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun getMovieGetDao(): MovieGetDao

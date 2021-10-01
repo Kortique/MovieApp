@@ -43,5 +43,6 @@ val appModule = module {
     viewModel { HistoryViewModel(get()) }
     viewModel { MovieDetailsViewModel(get()) }
     viewModel { ContactsViewModel() }
+    viewModel { PersonViewModel(get()) }
     viewModel { MapViewModel(get()) }
 }
