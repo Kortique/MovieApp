@@ -34,4 +34,6 @@ interface MoviesRepository {
 
     fun getPerson(personId: Long): Result<PersonDTO?>
 
+    fun getFavoriteMovieById(movieId: Long): Movie?
+
 }

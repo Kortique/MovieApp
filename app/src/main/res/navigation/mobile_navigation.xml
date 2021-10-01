@@ -47,7 +47,11 @@
             app:destination="@id/navigation_contacts" />
         <action
             android:id="@+id/action_navigation_details_to_person"
-            app:destination="@id/navigation_person" />
+            app:destination="@id/navigation_person">
+            <argument
+                android:name="movieId"
+                app:argType="long" />
+        </action>
     </fragment>
 
     <fragment

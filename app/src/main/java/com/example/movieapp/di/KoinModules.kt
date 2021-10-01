@@ -7,6 +7,7 @@ import com.example.movieapp.repositories.MoviesRepository
 import com.example.movieapp.repositories.MoviesRepositoryImpl
 import com.example.movieapp.ui.contacts.ContactsViewModel
 import com.example.movieapp.ui.map.MapViewModel
+import com.example.movieapp.helpers.NotificationHelper
 import com.example.movieapp.ui.person.PersonViewModel
 import com.example.movieapp.ui.details.MovieDetailsViewModel
 import com.example.movieapp.ui.favorites.FavoritesViewModel
@@ -34,6 +35,9 @@ val appModule = module {
     single { DatabaseModule.getAppDatabase(get()) }
     single { DatabaseModule.getMovieGetDao(get()) }
     single { DatabaseModule.getMovieSetDao(get()) }
+
+    // Notification helper
+    single { NotificationHelper(get()) }
 
     // view models
     viewModel { HomeViewModel(get(), get()) }
