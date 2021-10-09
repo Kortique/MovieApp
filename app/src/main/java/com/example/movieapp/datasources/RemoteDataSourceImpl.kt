@@ -1,77 +1,78 @@
 package com.example.movieapp.datasources
 
-import com.google.gson.Gson
-import com.example.movieapp.BuildConfig
 import com.example.movieapp.entities.Movie
-import com.example.movieapp.rest_entites.NowPlayingMoviesDTO
-import com.example.movieapp.utils.getLines
-import java.net.MalformedURLException
-import java.net.URL
-import javax.net.ssl.HttpsURLConnection
+import com.example.movieapp.entities.coreMovieModel
+import com.example.movieapp.remote.MovieDbService
+import com.example.movieapp.remote.entites.MovieDetailsDTO
+import com.example.movieapp.remote.entites.PersonDTO
 
-class RemoteDataSourceImpl : DataSource {
+class RemoteDataSourceImpl(private val movieDbService: MovieDbService) : DataSource {
 
     override fun getNowPlayingMovies(): Result<List<Movie>> {
-        try {
-            val url =
-                URL("${BuildConfig.MOVIEDB_BASE_URL}/3/movie/now_playing?api_key=" +
-                        "${BuildConfig.MOVIEDB_API_KEY}&language=en-US&page=1")
+        return try {
+            val response = movieDbService.getNowPlayingMovies().execute()
 
-            lateinit var urlConnection: HttpsURLConnection
-
-            return try {
-                urlConnection = url.openConnection() as HttpsURLConnection
-
-                if (urlConnection.responseCode != HttpsURLConnection.HTTP_OK) {
-                    return Result.failure(Exception("Response code: ${urlConnection.responseCode}. " +
-                            "Response message: ${urlConnection.responseMessage}"))
-                }
-
-                val lines = urlConnection.getLines()
-                val nowPlayingMoviesDTO = Gson().fromJson(lines, NowPlayingMoviesDTO::class.java)
-
-                Result.success(nowPlayingMoviesDTO.results)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Result.failure(e)
-            } finally {
-                urlConnection.disconnect()
+            if (!response.isSuccessful) {
+                return Result.failure(Exception("Response code: ${response.code()}. " +
+                        "Response message: ${response.errorBody()?.string()}"))
             }
 
-        } catch (e: MalformedURLException) {
-            return Result.failure(e)
+            val moviesDto = response.body()
+            Result.success(moviesDto?.results ?: listOf())
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
         }
-
     }
 
     override fun getUpcomingMovies(): Result<List<Movie>> {
-        try {
-            val url =
-                URL("${BuildConfig.MOVIEDB_BASE_URL}/3/movie/upcoming?api_key=" +
-                        "${BuildConfig.MOVIEDB_API_KEY}&language=en-US&page=1")
+        return try {
+            val response = movieDbService.getUpcomingMovies().execute()
 
-            lateinit var urlConnection: HttpsURLConnection
-
-            return try {
-                urlConnection = url.openConnection() as HttpsURLConnection
-
-                if (urlConnection.responseCode != HttpsURLConnection.HTTP_OK) {
-                    return Result.failure(Exception("Response code: ${urlConnection.responseCode}." +
-                            " Response message: ${urlConnection.responseMessage}"))
-                }
-
-                val lines = urlConnection.getLines()
-                val nowPlayingMoviesDTO = Gson().fromJson(lines, NowPlayingMoviesDTO::class.java)
-
-                Result.success(nowPlayingMoviesDTO.results)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                Result.failure(e)
-            } finally {
-                urlConnection.disconnect()
+            if (!response.isSuccessful) {
+                return Result.failure(Exception("Response code: ${response.code()}. " +
+                        "Response message: ${response.errorBody()?.string()}"))
             }
-        } catch (e: MalformedURLException) {
-            return Result.failure(e)
+
+            val moviesDto = response.body()
+            Result.success(moviesDto?.results ?: listOf())
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
+        }
+    }
+
+    override fun getMovieDetails(movieId: Long): Result<MovieDetailsDTO?> {
+        return try {
+            val response = movieDbService.getMovieDetails(movieId).execute()
+
+            if (!response.isSuccessful) {
+                return Result.failure(Exception("Response code: ${response.code()}. " +
+                        "Response message: ${response.errorBody()?.string()}"))
+            }
+
+            val movieDetailsDTO = response.body()
+            Result.success(movieDetailsDTO)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
+        }
+    }
+
+    override fun getPerson(personId: Long): Result<PersonDTO?> {
+        return try {
+            val response = movieDbService.getPerson(personId).execute()
+
+            if (!response.isSuccessful) {
+                return Result.failure(Exception("Response code: ${response.code()}. " +
+                        "Response message: ${response.errorBody()?.string()}"))
+            }
+
+            val personDTO = response.body()
+            Result.success(personDTO)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Result.failure(e)
         }
     }
 

@@ -12,5 +12,36 @@
     <string name="reload">Reload</string>
     <string name="connectivity_action">A change in network connectivity has occurred</string>
     <string name="downloaded_from_service">Movies are downloaded through the service</string>
+    <string name="settings">Settings</string>
+    <string name="adult_content">Adult content</string>
+    <string name="note">Note</string>
+    <string name="movie_note_hint">Here you can leave a note about the movie</string>
+    <string name="history">History</string>
+    <string name="viewing_date">Viewing date:</string>
+    <string name="overview">Overview</string>
+    <string name="search">Search</string>
+    <string name="share">Share</string>
+    <string name="need_permissions_to_read_contacts">You must grant permission to read contacts</string>
+    <string name="need_permissions_to_call">You must grant permission to call</string>
+    <string name="director">Director:</string>
+    <string name="budget">Budget:</string>
+    <string name="actors">Actors</string>
+    <string name="birthday">Birthday:</string>
+    <string name="place_of_birth">Place of birth:</string>
+    <string name="search_query_hint">Enter you request</string>
+    <string name="map_mode">Map mode</string>
+    <string name="normal">Normal</string>
+    <string name="satellites">Satellites</string>
+    <string name="terrain">Terrain</string>
+    <string name="traffic">Traffic</string>
+    <string name="need_permissions_to_location">You must grant permission to your location</string>
+    <string name="geofence_transition_invalid_type">Geofence transition invalid type %s</string>
+    <string name="geofence_channel_id">geofence_channel</string>
+    <string name="geofence_channel_name">Geofence receiver</string>
+    <string name="geofence_channel_description">This channel should be notified about geofence change.</string>
+    <string name="favorite_movies_channel_id">favorite_movies_channel</string>
+    <string name="favorite_movies_channel_name">Favorite movies</string>
+    <string name="favorite_movies_channel_description">This channel should be notified about favorite movies.</string>
+    <string name="id">ID:</string>
 </resources>
 

@@ -17,6 +17,36 @@
         <entry key="..\:/StudyAndroid/BasicAndroid/MovieApp/app/src/main/res/menu/bottom_nav_menu.xml" value="0.35260416666666666" />
         <entry key="..\:/StudyAndroid/BasicAndroid/MovieApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.2712962962962963" />
         <entry key="..\:/StudyAndroid/BasicAndroid/MovieApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.2712962962962963" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/drawable/ic_account.xml" value="0.2740740740740741" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/drawable/ic_call.xml" value="0.2740740740740741" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/drawable/ic_chart_outlined.xml" value="0.2740740740740741" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.2740740740740741" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/drawable/ic_favorite_border.xml" value="0.2109375" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/drawable/ic_image.xml" value="0.2740740740740741" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/activity_main.xml" value="0.19479166666666667" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/actor_item.xml" value="0.3546875" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/category_item.xml" value="0.19479166666666667" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/contact_item.xml" value="0.3546875" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/favorite_item.xml" value="0.19479166666666667" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/fragment_contacts.xml" value="0.3546875" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/fragment_favorites.xml" value="0.19479166666666667" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/fragment_history.xml" value="0.19479166666666667" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/fragment_home.xml" value="0.19479166666666667" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/fragment_map.xml" value="0.3546875" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/fragment_maps.xml" value="0.3546875" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/fragment_movie_details.xml" value="0.22" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/fragment_person.xml" value="0.3546875" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/fragment_ratings.xml" value="0.19479166666666667" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/fragment_settings.xml" value="0.19479166666666667" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/history_item.xml" value="0.19479166666666667" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/movie_item.xml" value="0.19479166666666667" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/now_playing_movie_item.xml" value="0.35052083333333334" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/progress_bar_and_error_msg.xml" value="0.19479166666666667" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/layout/upcoming_movie_item.xml" value="0.35052083333333334" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/menu/details_menu.xml" value="0.3546875" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/menu/history_menu.xml" value="0.19791666666666666" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/menu/home_menu.xml" value="0.19479166666666667" />
+        <entry key="..\:/StudyAndroid/BasicAndroid/MovieApplication/MovieApp/app/src/main/res/menu/map_menu.xml" value="0.3546875" />
       </map>
     </option>
   </component>
