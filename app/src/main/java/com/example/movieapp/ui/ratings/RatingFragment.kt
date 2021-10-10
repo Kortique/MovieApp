@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import com.example.movieapp.R
 import com.example.movieapp.databinding.FragmentRatingsBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -25,12 +25,10 @@ class RatingsFragment : Fragment() {
         _binding = FragmentRatingsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textNotifications
-        ratingsViewModel.text.observe(viewLifecycleOwner, {
-            textView.text = it
-        })
+        binding.textNotifications.text = getString(R.string.rating_text)
         return root
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
